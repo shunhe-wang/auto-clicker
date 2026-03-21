@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+env/
+
+# Logs
+*.log
+
+# Playwright
+playwright-report/
+test-results/
+
+# Saved browser profiles (may contain sensitive session data)
+profile/
+profiles/
+
+# Local config overrides (contain personal details)
+# Keep config.yaml (it's the annotated template), ignore personal ones
+*_config.yaml
+!config.yaml
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

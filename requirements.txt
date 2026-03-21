@@ -1,0 +1,6 @@
+# Core
+playwright>=1.44.0
+PyYAML>=6.0.1
+
+# Optional: coloured console output (gracefully absent if not installed)
+colorlog>=6.8.2

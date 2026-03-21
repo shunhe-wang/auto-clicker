@@ -1,0 +1,162 @@
+# =============================================================================
+# Auto-Clicker Configuration
+# =============================================================================
+# Copy this file to a name like "camp_signup.yaml" and fill in your details.
+# Run:  python main.py -c camp_signup.yaml
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# Target page
+# -----------------------------------------------------------------------------
+target_url: "https://example.com/registration"
+
+
+# -----------------------------------------------------------------------------
+# Element to watch for
+# Use ONE or MORE detection strategies; all configured ones are tried each cycle.
+# -----------------------------------------------------------------------------
+element:
+
+  # CSS selector — most reliable; supports any valid CSS selector
+  selector: "button.register-btn"
+
+  # Visible text match (case-insensitive partial match by default)
+  # text: "Register Now"
+  # exact_text: false    # set true to require exact match
+  # any_tag: false       # set true to match text inside non-interactive tags too
+
+  # ARIA role + optional accessible name
+  # role: "button"
+  # role_name: "Register"
+
+  # Detection sensitivity:
+  # true  (default) — element must be visible AND enabled before triggering.
+  # false           — trigger the instant the element is visible, even if still
+  #                   disabled.  Useful in NOTIFY mode to get the earliest
+  #                   possible alert; less useful in AUTO mode since clicking a
+  #                   disabled button does nothing.
+  require_enabled: true
+
+  # Stop watching after this many seconds (0 = watch forever)
+  timeout: 3600
+
+
+# -----------------------------------------------------------------------------
+# Polling
+# -----------------------------------------------------------------------------
+
+# Seconds between element checks
+check_interval: 5
+
+# Set to true if the target element only appears after a full page reload
+# (common for server-side-rendered pages).  Leave false for SPAs.
+reload_on_check: false
+
+
+# -----------------------------------------------------------------------------
+# Mode
+# "notify"  →  desktop notification + sound; you click yourself
+# "auto"    →  automatically clicks the element and fills the form below
+# -----------------------------------------------------------------------------
+mode: "notify"
+
+
+# -----------------------------------------------------------------------------
+# Typing mode (AUTO mode only)
+# false (default): uses Playwright fill() — reliable for React/validated inputs
+# true:            character-by-character with Gaussian delays (looks more human,
+#                  but can break masked fields like phone/date/OTP)
+# -----------------------------------------------------------------------------
+human_typing: false
+
+
+# -----------------------------------------------------------------------------
+# Persistent browser profile (optional)
+# Set to a directory path to save cookies, localStorage, and login sessions
+# across runs.  Useful when the target site requires you to be logged in.
+# Leave empty to use a fresh ephemeral context each run.
+# -----------------------------------------------------------------------------
+# profile_dir: "~/.auto-clicker/profile"
+
+
+# -----------------------------------------------------------------------------
+# Your details (used in AUTO mode only)
+# -----------------------------------------------------------------------------
+form_details:
+
+  # Template variables — reference these as {first_name}, {email}, etc.
+  first_name: "Jane"
+  last_name:  "Doe"
+  full_name:  "Jane Doe"
+  email:      "jane@example.com"
+  phone:      "+1 555-123-4567"
+
+  # Map each form field to one of your template variables (or a literal value).
+  #
+  # selector:  single CSS selector (no comma-splitting — use 'selectors' for fallbacks)
+  # selectors: YAML list of selectors tried left-to-right (preferred for fallback lists)
+  # value:     literal string, or {variable} placeholder from above
+  # type:      "text" (default) | "select" | "checkbox"
+  # iframe:    frame_locator selector if the field is inside an iframe (optional)
+  fields:
+    - selectors:
+        - "input[name='firstName']"
+        - "input[id='first_name']"
+        - "input[placeholder*='First']"
+      value: "{first_name}"
+
+    - selectors:
+        - "input[name='lastName']"
+        - "input[id='last_name']"
+        - "input[placeholder*='Last']"
+      value: "{last_name}"
+
+    - selectors:
+        - "input[name='name']"
+        - "input[id='name']"
+        - "input[placeholder*='Full name']"
+      value: "{full_name}"
+
+    - selectors:
+        - "input[type='email']"
+        - "input[name='email']"
+        - "input[id='email']"
+      value: "{email}"
+
+    - selectors:
+        - "input[type='tel']"
+        - "input[name='phone']"
+        - "input[name='telephone']"
+      value: "{phone}"
+
+  # CSS selector for the submit button (optional — auto-detected if omitted)
+  # submit_selector: "button[type='submit']"
+
+  # If the submit button is inside an iframe, add its frame selector here
+  # submit_iframe: "iframe.booking-widget"
+
+  # After submit, wait for this element / text to confirm success (optional but recommended)
+  # success_selector: ".confirmation-message"
+  # success_text: "successfully registered"
+
+  # If the success confirmation appears inside an iframe, name it here
+  # success_iframe: "iframe.booking-widget"
+
+
+# -----------------------------------------------------------------------------
+# Notifications (NOTIFY mode)
+# -----------------------------------------------------------------------------
+notifications:
+  sound: true                  # play a system sound
+  # sound_file: "/path/to/alert.wav"   # custom sound file (optional)
+  repeat: 3                    # number of times to repeat the alert
+  repeat_interval: 5           # seconds between repetitions
+
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+logging:
+  file:  "auto_clicker.log"   # log file path (relative to working directory)
+  level: "INFO"               # DEBUG | INFO | WARNING | ERROR
